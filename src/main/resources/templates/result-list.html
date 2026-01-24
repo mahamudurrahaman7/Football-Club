@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>BVB - Match Results</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="/img/realIcon2.png" rel="icon">
+  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/css/style.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bvb-yellow: #FDE100;
+      --bvb-black: #000000;
+      --bvb-dark-gray: #1a1a1a;
+      --bvb-light-gray: #2d2d2d;
+      --sidebar-width: 280px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+      background-attachment: fixed;
+      font-family: 'Roboto', sans-serif;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+              linear-gradient(45deg, transparent 48%, var(--bvb-yellow) 49%, var(--bvb-yellow) 51%, transparent 52%),
+              linear-gradient(-45deg, transparent 48%, var(--bvb-yellow) 49%, var(--bvb-yellow) 51%, transparent 52%);
+      background-size: 100px 100px;
+      opacity: 0.02;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .sidebar {
+      height: 100vh;
+      width: var(--sidebar-width);
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: linear-gradient(180deg, var(--bvb-black) 0%, var(--bvb-dark-gray) 100%);
+      padding-top: 30px;
+      font-family: 'Rajdhani', sans-serif;
+      z-index: 1000;
+      box-shadow: 5px 0 30px rgba(253, 225, 0, 0.15);
+      border-right: 3px solid var(--bvb-yellow);
+    }
+
+    .sidebar-logo {
+      text-align: center;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-bottom: 2px solid var(--bvb-yellow);
+    }
+
+    .sidebar-logo h2 {
+      color: var(--bvb-yellow);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin: 0;
+      text-transform: uppercase;
+      text-shadow: 0 0 20px rgba(253, 225, 0, 0.5);
+    }
+
+    .sidebar-logo p {
+      color: #ffffff;
+      font-size: 12px;
+      margin-top: 5px;
+      letter-spacing: 3px;
+      opacity: 0.8;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar ul li {
+      margin: 8px 15px;
+      position: relative;
+    }
+
+    .sidebar ul li a {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      text-decoration: none;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar ul li a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 4px;
+      background: var(--bvb-yellow);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar ul li a:hover {
+      background: var(--bvb-light-gray);
+      color: var(--bvb-yellow);
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(253, 225, 0, 0.2);
+    }
+
+    .sidebar ul li a:hover::before {
+      transform: scaleY(1);
+    }
+
+    .sidebar ul li a i {
+      margin-right: 12px;
+      font-size: 20px;
+    }
+
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: 40px;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+    }
+
+    .page-header {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      color: var(--bvb-yellow);
+      font-size: 48px;
+      font-weight: 700;
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      text-shadow: 0 0 30px rgba(253, 225, 0, 0.4);
+    }
+
+    .page-header p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 16px;
+    }
+
+    .table-container {
+      background: linear-gradient(135deg, var(--bvb-dark-gray) 0%, var(--bvb-light-gray) 100%);
+      border: 2px solid rgba(253, 225, 0, 0.3);
+      border-radius: 15px;
+      padding: 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .table-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--bvb-yellow) 0%, #fff44f 50%, var(--bvb-yellow) 100%);
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      margin: 0;
+    }
+
+    thead {
+      background: rgba(253, 225, 0, 0.1);
+    }
+
+    thead tr {
+      border-bottom: 2px solid var(--bvb-yellow);
+    }
+
+    th {
+      padding: 20px 15px;
+      text-align: left;
+      color: var(--bvb-yellow);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(253, 225, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    tbody tr:hover {
+      background: rgba(253, 225, 0, 0.05);
+      transform: translateX(5px);
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    td {
+      padding: 18px 15px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    td:first-child {
+      font-weight: 600;
+      color: var(--bvb-yellow);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 18px;
+    }
+
+    .score-cell {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .win {
+      color: #2ecc71;
+    }
+
+    .loss {
+      color: #e74c3c;
+    }
+
+    .draw {
+      color: #f39c12;
+    }
+
+    .venue-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .venue-home {
+      background: rgba(46, 204, 113, 0.2);
+      color: #2ecc71;
+      border: 1px solid #2ecc71;
+    }
+
+    .venue-away {
+      background: rgba(52, 152, 219, 0.2);
+      color: #3498db;
+      border: 1px solid #3498db;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .empty-state i {
+      font-size: 64px;
+      color: var(--bvb-yellow);
+      opacity: 0.3;
+      margin-bottom: 20px;
+    }
+
+    .empty-state p {
+      font-size: 18px;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 0;
+        overflow: hidden;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 20px;
+      }
+
+      table {
+        font-size: 14px;
+      }
+
+      th, td {
+        padding: 12px 10px;
+      }
+
+      .page-header h1 {
+        font-size: 32px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      th {
+        font-size: 14px;
+      }
+
+      td {
+        font-size: 13px;
+      }
+
+      .score-cell {
+        font-size: 18px;
+      }
+    }
+
+    .footer {
+      margin-left: var(--sidebar-width);
+      padding: 20px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 14px;
+    }
+
+    .back-to-top {
+      background: var(--bvb-yellow);
+      color: var(--bvb-black);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .back-to-top:hover {
+      background: #fff44f;
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+
+<body>
+
+<main id="main" class="main">
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <h2>BVB 09</h2>
+      <p>DASHBOARD</p>
+    </div>
+    <ul>
+      <li><a href="dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+      <li><a href="player-list"><i class="bi bi-people-fill"></i> Player List</a></li>
+      <li><a href="upcoming-matches"><i class="bi bi-calendar-event"></i> Upcoming Matches</a></li>
+      <li><a href="highlights"><i class="bi bi-play-circle-fill"></i> Highlights</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <section class="section">
+      <div class="page-header">
+        <h1><i class="bi bi-trophy-fill"></i> Match Results</h1>
+        <p>Season Performance Overview</p>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+          <tr>
+            <th><i class="bi bi-shield-fill"></i> Opponent</th>
+            <th><i class="bi bi-star-fill"></i> Our Score</th>
+            <th><i class="bi bi-star"></i> Their Score</th>
+            <th><i class="bi bi-geo-alt-fill"></i> Venue</th>
+          </tr>
+          </thead>
+          <tbody th:if="${resultList != null and !resultList.isEmpty()}">
+          <tr th:each="result : ${resultList}">
+            <td th:text="${result.opponentName}">Opponent Name</td>
+            <td class="score-cell"
+                th:text="${result.ourScore}"
+                th:classappend="${result.ourScore > result.theirScore} ? 'win' : (${result.ourScore < result.theirScore} ? 'loss' : 'draw')">
+              0
+            </td>
+            <td class="score-cell"
+                th:text="${result.theirScore}"
+                th:classappend="${result.theirScore > result.ourScore} ? 'win' : (${result.theirScore < result.ourScore} ? 'loss' : 'draw')">
+              0
+            </td>
+            <td>
+                                <span class="venue-badge"
+                                      th:classappend="${result.venueType == 'Home'} ? 'venue-home' : 'venue-away'"
+                                      th:text="${result.venueType}">
+                                    Venue
+                                </span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <div class="empty-state" th:if="${resultList == null or resultList.isEmpty()}">
+          <i class="bi bi-inbox"></i>
+          <p>No match results available yet</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer id="footer" class="footer">
+  <p>&copy; 2026 Borussia Dortmund. Echte Liebe.</p>
+</footer>
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+  <i class="bi bi-arrow-up-short"></i>
+</a>
+
+<!-- Vendor JS Files -->
+<script src="/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/vendor/chart.js/chart.umd.js"></script>
+<script src="/vendor/echarts/echarts.min.js"></script>
+<script src="/vendor/quill/quill.js"></script>
+<script src="/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="/vendor/tinymce/tinymce.min.js"></script>
+<script src="/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="/js/main.js"></script>
+
+</body>
+
+</html>

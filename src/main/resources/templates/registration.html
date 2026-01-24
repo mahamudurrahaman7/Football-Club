@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Registration BVB</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #FDE100 0%, #000000 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .registration-container {
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo-section h1 {
+      color: #FDE100;
+      font-weight: 700;
+      font-size: 32px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      margin-top: 15px;
+    }
+
+    .logo-placeholder {
+      width: 80px;
+      height: 80px;
+      background: #FDE100;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #000;
+      font-size: 24px;
+      box-shadow: 0 4px 15px rgba(253, 225, 0, 0.4);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      border: none;
+      overflow: hidden;
+    }
+
+    .card-body {
+      padding: 40px 35px;
+    }
+
+    .card-title {
+      color: #000;
+      font-weight: 600;
+      font-size: 26px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .card-subtitle {
+      color: #666;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .form-control, .form-select {
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 12px 15px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: #FDE100;
+      box-shadow: 0 0 0 0.2rem rgba(253, 225, 0, 0.25);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #FDE100 0%, #000000 100%);
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: transform 0.2s ease;
+      margin-top: 20px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(253, 225, 0, 0.4);
+    }
+
+    .alert {
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 20px;
+    }
+
+    .form-check-input:checked {
+      background-color: #FDE100;
+      border-color: #FDE100;
+    }
+
+    .form-check-label a {
+      color: #000;
+      font-weight: 500;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .login-link a {
+      color: #000;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .credits {
+      text-align: center;
+      color: #fff;
+      margin-top: 20px;
+      font-size: 13px;
+    }
+
+    .credits a {
+      color: #FDE100;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .mb-3 {
+      margin-bottom: 20px !important;
+    }
+  </style>
+</head>
+
+<body>
+<div class="registration-container">
+  <div class="logo-section">
+    <div class="logo-placeholder">BVB</div>
+    <h1>Borussia Dortmund</h1>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Create an Account</h5>
+      <p class="card-subtitle">Enter your personal details to join the BVB family.</p>
+
+      <div class="alert alert-warning alert-dismissible fade show d-none" role="alert">
+        This email already exists. Try a different email.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
+      <form class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="name" required>
+          <div class="invalid-feedback">Please enter your full name!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" class="form-control" id="email" required>
+          <div class="invalid-feedback">Please enter a valid email address!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" required>
+          <div class="invalid-feedback">Please enter your password!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="supporterSince" class="form-label">BVB Supporter Since</label>
+          <input type="date" class="form-control" id="supporterSince" required>
+          <div class="invalid-feedback">Please enter when you started supporting BVB</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="country" class="form-label">Country of Residence</label>
+          <select id="country" class="form-select" required>
+            <option value="" selected disabled>Select your country</option>
+            <option value="Germany">Germany</option>
+            <option value="Algeria">Algeria</option>
+            <option value="Argentina">Argentina</option>
+            <option value="Australia">Australia</option>
+            <option value="Austria">Austria</option>
+            <option value="Bangladesh">Bangladesh</option>
+            <option value="Belgium">Belgium</option>
+            <option value="Brazil">Brazil</option>
+            <option value="Canada">Canada</option>
+            <option value="Chile">Chile</option>
+            <option value="China">China</option>
+            <option value="Colombia">Colombia</option>
+            <option value="Czech Republic">Czech Republic</option>
+            <option value="Denmark">Denmark</option>
+            <option value="Egypt">Egypt</option>
+            <option value="Ethiopia">Ethiopia</option>
+            <option value="Finland">Finland</option>
+            <option value="France">France</option>
+            <option value="Ghana">Ghana</option>
+            <option value="Greece">Greece</option>
+            <option value="Hungary">Hungary</option>
+            <option value="Indonesia">Indonesia</option>
+            <option value="Ireland">Ireland</option>
+            <option value="Italy">Italy</option>
+            <option value="Japan">Japan</option>
+            <option value="Kenya">Kenya</option>
+            <option value="Kuwait">Kuwait</option>
+            <option value="Malaysia">Malaysia</option>
+            <option value="Mexico">Mexico</option>
+            <option value="Morocco">Morocco</option>
+            <option value="Netherlands">Netherlands</option>
+            <option value="New Zealand">New Zealand</option>
+            <option value="Nigeria">Nigeria</option>
+            <option value="Norway">Norway</option>
+            <option value="Pakistan">Pakistan</option>
+            <option value="Peru">Peru</option>
+            <option value="Philippines">Philippines</option>
+            <option value="Poland">Poland</option>
+            <option value="Portugal">Portugal</option>
+            <option value="Qatar">Qatar</option>
+            <option value="Romania">Romania</option>
+            <option value="Russia">Russia</option>
+            <option value="Saudi Arabia">Saudi Arabia</option>
+            <option value="Singapore">Singapore</option>
+            <option value="Slovakia">Slovakia</option>
+            <option value="South Africa">South Africa</option>
+            <option value="South Korea">South Korea</option>
+            <option value="Spain">Spain</option>
+            <option value="Sweden">Sweden</option>
+            <option value="Switzerland">Switzerland</option>
+            <option value="Thailand">Thailand</option>
+            <option value="Turkey">Turkey</option>
+            <option value="Ukraine">Ukraine</option>
+            <option value="United Arab Emirates">United Arab Emirates</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="United States">United States</option>
+            <option value="Venezuela">Venezuela</option>
+            <option value="Vietnam">Vietnam</option>
+          </select>
+          <div class="invalid-feedback">Please select your country.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dateOfBirth" class="form-label">Date of Birth</label>
+          <input type="date" class="form-control" id="dateOfBirth" required>
+          <div class="invalid-feedback">Please enter your date of birth.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="favouritePlayer" class="form-label">Favourite Player</label>
+          <select id="favouritePlayer" class="form-select" required>
+            <option value="" selected disabled>Select your favourite player</option>
+            <option value="Marco Reus">Marco Reus</option>
+            <option value="Gregor Kobel">Gregor Kobel</option>
+            <option value="Mats Hummels">Mats Hummels</option>
+            <option value="Nico Schlotterbeck">Nico Schlotterbeck</option>
+            <option value="Julian Ryerson">Julian Ryerson</option>
+            <option value="Ian Maatsen">Ian Maatsen</option>
+            <option value="Emre Can">Emre Can</option>
+            <option value="Marcel Sabitzer">Marcel Sabitzer</option>
+            <option value="Julian Brandt">Julian Brandt</option>
+            <option value="Karim Adeyemi">Karim Adeyemi</option>
+            <option value="Donyell Malen">Donyell Malen</option>
+            <option value="Jamie Gittens">Jamie Gittens</option>
+            <option value="Serhou Guirassy">Serhou Guirassy</option>
+            <option value="Maximilian Beier">Maximilian Beier</option>
+            <option value="Waldemar Anton">Waldemar Anton</option>
+            <option value="Pascal Groß">Pascal Groß</option>
+            <option value="Mario Götze">Mario Götze</option>
+            <option value="Lukasz Piszczek">Łukasz Piszczek</option>
+            <option value="Felix Nmecha">Felix Nmecha</option>
+            <option value="Ramy Bensebaini">Ramy Bensebaini</option>
+            <option value="Niklas Süle">Niklas Süle</option>
+            <option value="Robert Lewandowski">Robert Lewandowski </option>
+            <option value="Roman Weidenfeller">Roman Weidenfeller </option>
+            <option value="Pierre-Emerick Aubameyang">Pierre-Emerick Aubameyang </option>
+            <option value="Shinji Kagawa">Shinji Kagawa </option>
+            <option value="Jakub Błaszczykowski">Jakub Błaszczykowski </option>
+            <option value="Erling Haaland">Erling Haaland </option>
+            <option value="Jadon Sancho">Jadon Sancho </option>
+          </select>
+          <div class="invalid-feedback">Please select your favourite player.</div>
+        </div>
+
+        <div class="mb-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="acceptTerms" required>
+            <label class="form-check-label" for="acceptTerms">
+              I agree and accept the <a href="#">terms and conditions</a>
+            </label>
+            <div class="invalid-feedback">You must agree before submitting.</div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary w-100" type="submit">Create Account</button>
+
+        <div class="login-link">
+          Already have an account? <a href="login">Log in</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="credits">
+    Designed by <a href="#">Mahamudur Rahaman</a>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Form validation
+  (function() {
+    'use strict';
+    var forms = document.querySelectorAll('.needs-validation');
+    Array.prototype.slice.call(forms).forEach(function(form) {
+      form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+
+    // Set max date for date inputs to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('supporterSince').setAttribute('max', today);
+    document.getElementById('dateOfBirth').setAttribute('max', today);
+  })();
+</script>
+</body>
+</html>

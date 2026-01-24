@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Player List - Borussia Dortmund</title>
+  <meta content="Borussia Dortmund squad and player management" name="description">
+  <meta content="BVB, Borussia Dortmund, players, squad" name="keywords">
+
+  <!-- Favicons -->
+  <link href="/img/realIcon2.png" rel="icon">
+  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/css/style.css" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: linear-gradient(180deg, #000 0%, #1a1a1a 100%);
+      border-right: 3px solid #FDE100;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .sidebar-brand {
+      padding: 30px 20px;
+      text-align: center;
+      border-bottom: 2px solid #FDE100;
+    }
+
+    .sidebar-brand h2 {
+      color: #FDE100;
+      font-weight: 700;
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    .sidebar-brand p {
+      color: #888;
+      font-size: 0.8rem;
+      margin-top: 5px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 20px 0;
+    }
+
+    .sidebar ul li {
+      margin: 5px 0;
+    }
+
+    .sidebar ul li a {
+      display: block;
+      padding: 15px 25px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+    }
+
+    .sidebar ul li a:hover {
+      background: rgba(253, 225, 0, 0.1);
+      border-left-color: #FDE100;
+      color: #FDE100;
+    }
+
+    .sidebar ul li a i {
+      margin-right: 10px;
+      width: 20px;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 250px;
+      padding: 40px;
+      min-height: 100vh;
+    }
+
+    /* Admin Form Card */
+    .admin-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(253, 225, 0, 0.2);
+      border-radius: 15px;
+      padding: 30px;
+      margin-bottom: 40px;
+    }
+
+    .admin-card h5 {
+      color: #FDE100;
+      font-weight: 600;
+      margin-bottom: 25px;
+      font-size: 1.3rem;
+    }
+
+    .form-label {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .form-control, .form-select {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(253, 225, 0, 0.3);
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px 15px;
+    }
+
+    .form-control:focus, .form-select:focus {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #FDE100;
+      color: #fff;
+      box-shadow: 0 0 0 0.2rem rgba(253, 225, 0, 0.25);
+    }
+
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .form-select option {
+      background: #1a1a1a;
+      color: #fff;
+    }
+
+    .btn-primary {
+      background: #FDE100;
+      border: none;
+      color: #000;
+      font-weight: 600;
+      padding: 12px 30px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(253, 225, 0, 0.3);
+    }
+
+    .btn-danger {
+      background: #dc3545;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-danger:hover {
+      background: #c82333;
+      transform: translateY(-2px);
+    }
+
+    /* Player List Section */
+    .section-title {
+      color: #FDE100;
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin: 40px 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .player-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .player-card {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(253, 225, 0, 0.2);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .player-card:hover {
+      transform: translateY(-10px);
+      border-color: #FDE100;
+      box-shadow: 0 15px 40px rgba(253, 225, 0, 0.2);
+    }
+
+    .player-card a {
+      text-decoration: none;
+      display: block;
+    }
+
+    .player-image-container {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #000 0%, #1a1a1a 100%);
+    }
+
+    .player-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .player-card:hover .player-image-container img {
+      transform: scale(1.1);
+    }
+
+    .player-info {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .player-name {
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .player-position {
+      color: #FDE100;
+      font-size: 1rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .player-actions {
+      padding: 15px 20px;
+      border-top: 1px solid rgba(253, 225, 0, 0.1);
+    }
+
+    .custom-file-input {
+      cursor: pointer;
+    }
+
+    .custom-file-label {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(253, 225, 0, 0.3);
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px 15px;
+    }
+
+    #imgPreview {
+      border: 2px solid #FDE100;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 200px;
+      }
+
+      .main-content {
+        margin-left: 200px;
+        padding: 20px;
+      }
+
+      .player-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .player-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<main id="main" class="main">
+
+  <!-- Sidebar Navigation -->
+  <div class="sidebar">
+    <div class="sidebar-brand">
+      <h2>BVB</h2>
+      <p>Admin Panel</p>
+    </div>
+    <ul>
+      <li><a href="dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+      <li><a href="upcoming-matches"><i class="bi bi-calendar-event"></i> Upcoming Matches</a></li>
+      <li><a href="result-list"><i class="bi bi-trophy"></i> Result List</a></li>
+      <li><a href="highlights"><i class="bi bi-play-circle"></i> Highlights</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <section class="section">
+
+      <!-- Admin Form (Only visible for admins) -->
+      <div th:if="${isAdmin}">
+        <div class="admin-card">
+          <h5><i class="bi bi-person-plus-fill me-2"></i>Player Entry</h5>
+
+          <form method="post" th:action="@{player-list}" th:object="${dto}" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="playerId" class="form-label">Player ID</label>
+                <input type="text" class="form-control" th:field="*{playerId}" id="playerId" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="playerName" class="form-label">Player Name</label>
+                <input type="text" class="form-control" th:field="*{playerName}" id="playerName" required>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label for="jerseyNumber" class="form-label">Jersey Number</label>
+                <input type="number" class="form-control" th:field="*{jerseyNumber}" id="jerseyNumber" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="height" class="form-label">Height (cm)</label>
+                <input type="number" class="form-control" th:field="*{height}" id="height" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="weight" class="form-label">Weight (kg)</label>
+                <input type="number" class="form-control" th:field="*{weight}" id="weight" required>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="goals" class="form-label">Goals</label>
+                <input type="number" class="form-control" th:field="*{goals}" id="goals" value="0">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="country" class="form-label">Nationality</label>
+                <select th:field="*{country}" id="country" class="form-select" required>
+                  <option value="">Select Country</option>
+                  <option value="Germany">Germany</option>
+                  <option value="England">England</option>
+                  <option value="France">France</option>
+                  <option value="Spain">Spain</option>
+                  <option value="Netherlands">Netherlands</option>
+                  <option value="Belgium">Belgium</option>
+                  <option value="Portugal">Portugal</option>
+                  <option value="Brazil">Brazil</option>
+                  <option value="Argentina">Argentina</option>
+                  <option value="Italy">Italy</option>
+                  <option value="Croatia">Croatia</option>
+                  <option value="Poland">Poland</option>
+                  <option value="Switzerland">Switzerland</option>
+                  <option value="Austria">Austria</option>
+                  <option value="Denmark">Denmark</option>
+                  <option value="Norway">Norway</option>
+                  <option value="Sweden">Sweden</option>
+                  <option value="Turkey">Turkey</option>
+                  <option value="United States">United States</option>
+                  <option value="Japan">Japan</option>
+                  <option value="South Korea">South Korea</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                <input type="date" class="form-control" th:field="*{dateOfBirth}" id="dateOfBirth" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="inTheClubSince" class="form-label">In Club Since</label>
+                <input type="date" class="form-control" th:field="*{inTheClubSince}" id="inTheClubSince" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="contractEnds" class="form-label">Contract Ends</label>
+                <input type="date" class="form-control" th:field="*{contractEnds}" id="contractEnds" required>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="foot" class="form-label">Preferred Foot</label>
+                <select th:field="*{foot}" id="foot" class="form-select" required>
+                  <option value="Right">Right</option>
+                  <option value="Left">Left</option>
+                  <option value="Both">Both</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="position" class="form-label">Position</label>
+                <select th:field="*{position}" id="position" class="form-select" required>
+                  <option value="Forward">Forward</option>
+                  <option value="Midfielder">Midfielder</option>
+                  <option value="Defender">Defender</option>
+                  <option value="Goalkeeper">Goalkeeper</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Player Image</label>
+              <div class="custom-file">
+                <input type="file" class="form-control custom-file-input" name="productImage"
+                       accept="image/jpeg, image/png, image/jpg" id="productImage"/>
+              </div>
+              <div class="form-group">
+                <img src="#" id="imgPreview" height="120px" width="120px"
+                     th:src="@{${'/img/' + dto.image}}" style="margin-top: 15px" alt="Preview">
+              </div>
+            </div>
+
+            <input type="hidden" name="image" th:value="${dto.image}">
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="bi bi-check-circle me-2"></i>Add Player
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Player List Section -->
+      <h1 class="section-title">Squad</h1>
+
+      <div class="player-grid">
+        <div th:each="player : ${playerList}" class="player-card">
+          <a th:href="@{/player/{id}(id=${player.id})}">
+            <div class="player-image-container">
+              <img th:src="@{${'/img/' + player.image}}" alt="Player Image"/>
+            </div>
+            <div class="player-info">
+              <h3 class="player-name" th:text="${player.playerName}">Player Name</h3>
+              <p class="player-position" th:text="${player.position}">Position</p>
+            </div>
+          </a>
+
+          <div th:if="${isAdmin}" class="player-actions">
+            <form method="post" th:action="@{/delete-player}">
+              <input type="hidden" name="id" th:value="${player.id}" />
+              <button type="submit" class="btn btn-danger w-100">
+                <i class="bi bi-trash me-2"></i>Delete Player
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+</main>
+
+<!-- Vendor JS Files -->
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Image Preview Script -->
+<script>
+  document.getElementById('productImage').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('imgPreview').src = e.target.result;
+      }
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
+
+</body>
+</html>
