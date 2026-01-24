@@ -1,378 +1,511 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Registration BVB</title>
+
+  <title>Registration BVB Fan</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="/img/bvbIcon.png" rel="icon">
+  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Vendor CSS Files -->
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/css/style.css" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #FDE100 0%, #000000 100%);
+      background: linear-gradient(135deg, #1a1600 0%, #2d2600 25%, #1a1600 50%, #000000 75%, #1a1600 100%);
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    .registration-container {
-      max-width: 500px;
-      width: 100%;
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+              radial-gradient(circle at 20% 30%, rgba(254, 221, 0, 0.25) 0%, transparent 40%),
+              radial-gradient(circle at 80% 70%, rgba(254, 221, 0, 0.2) 0%, transparent 40%),
+              radial-gradient(circle at 50% 50%, rgba(254, 221, 0, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .logo-section {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .logo-section h1 {
-      color: #FDE100;
-      font-weight: 700;
-      font-size: 32px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-      margin-top: 15px;
-    }
-
-    .logo-placeholder {
-      width: 80px;
-      height: 80px;
-      background: #FDE100;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: #000;
-      font-size: 24px;
-      box-shadow: 0 4px 15px rgba(253, 225, 0, 0.4);
+    .container {
+      position: relative;
+      z-index: 1;
     }
 
     .card {
       background: rgba(255, 255, 255, 0.98);
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(20px);
       border: none;
+      border-radius: 20px;
+      box-shadow:
+              0 20px 60px rgba(254, 221, 0, 0.5),
+              0 0 100px rgba(254, 221, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.5);
       overflow: hidden;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #FEDD00 0%, #000000 25%, #FEDD00 50%, #000000 75%, #FEDD00 100%);
     }
 
     .card-body {
-      padding: 40px 35px;
+      padding: 2.5rem;
+    }
+
+    .logo {
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .logo span {
+      background: linear-gradient(135deg, #000000 0%, #FEDD00 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 10px rgba(254, 221, 0, 0.3);
     }
 
     .card-title {
-      color: #000;
-      font-weight: 600;
-      font-size: 26px;
-      margin-bottom: 10px;
-      text-align: center;
+      color: #000000;
+      font-weight: 700;
+      font-size: 1.8rem !important;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    .card-subtitle {
+    .text-center.small {
       color: #666;
-      font-size: 14px;
-      text-align: center;
-      margin-bottom: 30px;
+      font-size: 0.95rem;
     }
 
     .form-label {
-      font-weight: 500;
-      color: #333;
-      margin-bottom: 8px;
-      font-size: 14px;
+      color: #000000;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .form-control, .form-select {
       border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      padding: 12px 15px;
-      font-size: 14px;
+      border-radius: 12px;
+      padding: 12px 16px;
       transition: all 0.3s ease;
+      background: #ffffff;
+      font-size: 0.95rem;
     }
 
     .form-control:focus, .form-select:focus {
-      border-color: #FDE100;
-      box-shadow: 0 0 0 0.2rem rgba(253, 225, 0, 0.25);
+      border-color: #FEDD00;
+      box-shadow: 0 0 0 0.2rem rgba(254, 221, 0, 0.25);
+      background: #fffef5;
+    }
+
+    .form-control:hover, .form-select:hover {
+      border-color: #FEDD00;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #FDE100 0%, #000000 100%);
+      background: linear-gradient(135deg, #FEDD00 0%, #f5d000 100%);
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 14px;
-      font-weight: 600;
-      font-size: 16px;
-      transition: transform 0.2s ease;
-      margin-top: 20px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #000000;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(254, 221, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 20px rgba(253, 225, 0, 0.4);
+      box-shadow: 0 8px 25px rgba(254, 221, 0, 0.5);
+      background: linear-gradient(135deg, #f5d000 0%, #FEDD00 100%);
     }
 
-    .alert {
-      border-radius: 10px;
-      border: none;
-      margin-bottom: 20px;
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .alert-warning {
+      background: linear-gradient(135deg, #fff3cd 0%, #fff8e1 100%);
+      border: 2px solid #FEDD00;
+      border-radius: 12px;
+      color: #856404;
+      font-weight: 500;
     }
 
     .form-check-input:checked {
-      background-color: #FDE100;
-      border-color: #FDE100;
+      background-color: #FEDD00;
+      border-color: #FEDD00;
     }
 
-    .form-check-label a {
-      color: #000;
-      font-weight: 500;
+    .form-check-input:focus {
+      box-shadow: 0 0 0 0.2rem rgba(254, 221, 0, 0.25);
+      border-color: #FEDD00;
     }
 
-    .login-link {
-      text-align: center;
-      margin-top: 20px;
-      color: #666;
-      font-size: 14px;
-    }
-
-    .login-link a {
-      color: #000;
+    a {
+      color: #000000;
       font-weight: 600;
       text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
     }
 
-    .login-link a:hover {
-      text-decoration: underline;
+    a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #FEDD00;
+      transition: width 0.3s ease;
+    }
+
+    a:hover::after {
+      width: 100%;
+    }
+
+    a:hover {
+      color: #FEDD00;
     }
 
     .credits {
-      text-align: center;
-      color: #fff;
-      margin-top: 20px;
-      font-size: 13px;
+      color: #FEDD00;
+      font-weight: 500;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     .credits a {
-      color: #FDE100;
-      text-decoration: none;
-      font-weight: 500;
+      color: #FEDD00;
+      font-weight: 700;
     }
 
-    .mb-3 {
-      margin-bottom: 20px !important;
+    .credits a:hover {
+      color: #ffffff;
+    }
+
+    .back-to-top {
+      background: linear-gradient(135deg, #FEDD00 0%, #f5d000 100%);
+      color: #000000;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(254, 221, 0, 0.4);
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(254, 221, 0, 0.6);
+    }
+
+    .invalid-feedback {
+      color: #dc3545;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+
+    /* Animated background elements */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(254, 221, 0, 0.25) 0%, transparent 70%);
+      border-radius: 50%;
+      top: 10%;
+      right: 5%;
+      animation: float 6s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
     }
   </style>
 </head>
 
 <body>
-<div class="registration-container">
-  <div class="logo-section">
-    <div class="logo-placeholder">BVB</div>
-    <h1>Borussia Dortmund</h1>
-  </div>
 
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Create an Account</h5>
-      <p class="card-subtitle">Enter your personal details to join the BVB family.</p>
+<main>
+  <div class="container">
 
-      <div class="alert alert-warning alert-dismissible fade show d-none" role="alert">
-        This email already exists. Try a different email.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
+    <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
-      <form action="/registration" method="post" th:action="@{registration}" th:object="${dto}"class="needs-validation" novalidate>
-        <div class="mb-3">
-          <label for="name" class="form-label">Full Name</label>
-          <input type="text" class="form-control" id="name" required>
-          <div class="invalid-feedback">Please enter your full name!</div>
-        </div>
+            <div class="d-flex justify-content-center py-4">
+              <a href="" class="logo d-flex align-items-center w-auto">
+                <img src="/img/bvbIcon.png" alt="" style="max-height: 50px; margin-right: 12px;">
+                <span style="font-size: 28px" class="d-none d-lg-block">Borussia Dortmund</span>
+              </a>
+            </div>
 
-        <div class="mb-3">
-          <label for="email" class="form-label">Email Address</label>
-          <input type="email" class="form-control" id="email" required>
-          <div class="invalid-feedback">Please enter a valid email address!</div>
-        </div>
+            <div class="card mb-3">
 
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password" required>
-          <div class="invalid-feedback">Please enter your password!</div>
-        </div>
+              <div class="card-body">
 
-        <div class="mb-3">
-          <label for="supporterSince" class="form-label">BVB Supporter Since</label>
-          <input type="date" class="form-control" id="supporterSince" required>
-          <div class="invalid-feedback">Please enter when you started supporting BVB</div>
-        </div>
+                <div class="pt-4 pb-2">
+                  <h5 class="card-title text-center pb-0 fs-4">Join The Yellow Wall</h5>
+                  <p class="text-center small">Enter your details to become part of BVB family</p>
+                </div>
 
-        <div class="mb-3">
-          <label for="country" class="form-label">Country of Residence</label>
-          <select id="country" class="form-select" required>
-            <option value="" selected disabled>Select your country</option>
-            <option value="Germany">Germany</option>
-            <option value="Algeria">Algeria</option>
-            <option value="Argentina">Argentina</option>
-            <option value="Australia">Australia</option>
-            <option value="Austria">Austria</option>
-            <option value="Bangladesh">Bangladesh</option>
-            <option value="Belgium">Belgium</option>
-            <option value="Brazil">Brazil</option>
-            <option value="Canada">Canada</option>
-            <option value="Chile">Chile</option>
-            <option value="China">China</option>
-            <option value="Colombia">Colombia</option>
-            <option value="Czech Republic">Czech Republic</option>
-            <option value="Denmark">Denmark</option>
-            <option value="Egypt">Egypt</option>
-            <option value="Ethiopia">Ethiopia</option>
-            <option value="Finland">Finland</option>
-            <option value="France">France</option>
-            <option value="Ghana">Ghana</option>
-            <option value="Greece">Greece</option>
-            <option value="Hungary">Hungary</option>
-            <option value="Indonesia">Indonesia</option>
-            <option value="Ireland">Ireland</option>
-            <option value="Italy">Italy</option>
-            <option value="Japan">Japan</option>
-            <option value="Kenya">Kenya</option>
-            <option value="Kuwait">Kuwait</option>
-            <option value="Malaysia">Malaysia</option>
-            <option value="Mexico">Mexico</option>
-            <option value="Morocco">Morocco</option>
-            <option value="Netherlands">Netherlands</option>
-            <option value="New Zealand">New Zealand</option>
-            <option value="Nigeria">Nigeria</option>
-            <option value="Norway">Norway</option>
-            <option value="Pakistan">Pakistan</option>
-            <option value="Peru">Peru</option>
-            <option value="Philippines">Philippines</option>
-            <option value="Poland">Poland</option>
-            <option value="Portugal">Portugal</option>
-            <option value="Qatar">Qatar</option>
-            <option value="Romania">Romania</option>
-            <option value="Russia">Russia</option>
-            <option value="Saudi Arabia">Saudi Arabia</option>
-            <option value="Singapore">Singapore</option>
-            <option value="Slovakia">Slovakia</option>
-            <option value="South Africa">South Africa</option>
-            <option value="South Korea">South Korea</option>
-            <option value="Spain">Spain</option>
-            <option value="Sweden">Sweden</option>
-            <option value="Switzerland">Switzerland</option>
-            <option value="Thailand">Thailand</option>
-            <option value="Turkey">Turkey</option>
-            <option value="Ukraine">Ukraine</option>
-            <option value="United Arab Emirates">United Arab Emirates</option>
-            <option value="United Kingdom">United Kingdom</option>
-            <option value="United States">United States</option>
-            <option value="Venezuela">Venezuela</option>
-            <option value="Vietnam">Vietnam</option>
-          </select>
-          <div class="invalid-feedback">Please select your country.</div>
-        </div>
+                <div class="alert alert-warning alert-dismissible fade show" th:if="${dto.isAlreadyExists()}" role="alert">
+                  This email already exists. Try a different email.
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
 
-        <div class="mb-3">
-          <label for="dateOfBirth" class="form-label">Date of Birth</label>
-          <input type="date" class="form-control" id="dateOfBirth" required>
-          <div class="invalid-feedback">Please enter your date of birth.</div>
-        </div>
+                <form class="row g-3 needs-validation" novalidate method="post" th:action="@{registration}"
+                      th:object="${dto}">
 
-        <div class="mb-3">
-          <label for="favouritePlayer" class="form-label">Favourite Player</label>
-          <select id="favouritePlayer" class="form-select" required>
-            <option value="" selected disabled>Select your favourite player</option>
-            <option value="Marco Reus">Marco Reus</option>
-            <option value="Gregor Kobel">Gregor Kobel</option>
-            <option value="Mats Hummels">Mats Hummels</option>
-            <option value="Nico Schlotterbeck">Nico Schlotterbeck</option>
-            <option value="Julian Ryerson">Julian Ryerson</option>
-            <option value="Ian Maatsen">Ian Maatsen</option>
-            <option value="Emre Can">Emre Can</option>
-            <option value="Marcel Sabitzer">Marcel Sabitzer</option>
-            <option value="Julian Brandt">Julian Brandt</option>
-            <option value="Karim Adeyemi">Karim Adeyemi</option>
-            <option value="Donyell Malen">Donyell Malen</option>
-            <option value="Jamie Gittens">Jamie Gittens</option>
-            <option value="Serhou Guirassy">Serhou Guirassy</option>
-            <option value="Maximilian Beier">Maximilian Beier</option>
-            <option value="Waldemar Anton">Waldemar Anton</option>
-            <option value="Pascal Groß">Pascal Groß</option>
-            <option value="Mario Götze">Mario Götze</option>
-            <option value="Lukasz Piszczek">Łukasz Piszczek</option>
-            <option value="Felix Nmecha">Felix Nmecha</option>
-            <option value="Ramy Bensebaini">Ramy Bensebaini</option>
-            <option value="Niklas Süle">Niklas Süle</option>
-            <option value="Robert Lewandowski">Robert Lewandowski </option>
-            <option value="Roman Weidenfeller">Roman Weidenfeller </option>
-            <option value="Pierre-Emerick Aubameyang">Pierre-Emerick Aubameyang </option>
-            <option value="Shinji Kagawa">Shinji Kagawa </option>
-            <option value="Jakub Błaszczykowski">Jakub Błaszczykowski </option>
-            <option value="Erling Haaland">Erling Haaland </option>
-            <option value="Jadon Sancho">Jadon Sancho </option>
-          </select>
-          <div class="invalid-feedback">Please select your favourite player.</div>
-        </div>
+                  <div class="col-12">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" name="name" class="form-control" th:field="*{name}" id="name" required>
+                    <div class="invalid-feedback">Please, enter your full name!</div>
+                  </div>
 
-        <div class="mb-3">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="acceptTerms" required>
-            <label class="form-check-label" for="acceptTerms">
-              I agree and accept the <a href="#">terms and conditions</a>
-            </label>
-            <div class="invalid-feedback">You must agree before submitting.</div>
+                  <div class="col-12">
+                    <label for="yourEmail" class="form-label">Your Email</label>
+                    <input type="email" name="email" class="form-control" th:field="*{email}" id="yourEmail" required>
+                    <div class="invalid-feedback">Please enter a valid Email address!</div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="yourPassword" class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" th:field="*{password}" id="yourPassword" required>
+                    <div class="invalid-feedback">Please enter your password!</div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="supporterSince" class="form-label">BVB supporter since</label>
+                    <input type="date" name="date" class="form-control" th:field="*{supportSince}" id="supporterSince" th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
+                    <div class="invalid-feedback">Please enter when you started to support BVB</div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="country" class="form-label">Country of Residence</label>
+                    <select th:field="*{country}" id="country" class="form-select">
+                      <option value="Germany" selected>Germany</option>
+                      <option value="Algeria">Algeria</option>
+                      <option value="Argentina">Argentina</option>
+                      <option value="Australia">Australia</option>
+                      <option value="Austria">Austria</option>
+                      <option value="Bangladesh">Bangladesh</option>
+                      <option value="Belgium">Belgium</option>
+                      <option value="Brazil">Brazil</option>
+                      <option value="Canada">Canada</option>
+                      <option value="Chile">Chile</option>
+                      <option value="China">China</option>
+                      <option value="Colombia">Colombia</option>
+                      <option value="Czech Republic">Czech Republic</option>
+                      <option value="Denmark">Denmark</option>
+                      <option value="Egypt">Egypt</option>
+                      <option value="Ethiopia">Ethiopia</option>
+                      <option value="Finland">Finland</option>
+                      <option value="France">France</option>
+                      <option value="Germany">Germany</option>
+                      <option value="Ghana">Ghana</option>
+                      <option value="Greece">Greece</option>
+                      <option value="Hungary">Hungary</option>
+                      <option value="India">India</option>
+                      <option value="Indonesia">Indonesia</option>
+                      <option value="Ireland">Ireland</option>
+                      <option value="Italy">Italy</option>
+                      <option value="Japan">Japan</option>
+                      <option value="Kenya">Kenya</option>
+                      <option value="Kuwait">Kuwait</option>
+                      <option value="Malaysia">Malaysia</option>
+                      <option value="Mexico">Mexico</option>
+                      <option value="Morocco">Morocco</option>
+                      <option value="Netherlands">Netherlands</option>
+                      <option value="New Zealand">New Zealand</option>
+                      <option value="Nigeria">Nigeria</option>
+                      <option value="Norway">Norway</option>
+                      <option value="Pakistan">Pakistan</option>
+                      <option value="Peru">Peru</option>
+                      <option value="Philippines">Philippines</option>
+                      <option value="Poland">Poland</option>
+                      <option value="Portugal">Portugal</option>
+                      <option value="Qatar">Qatar</option>
+                      <option value="Romania">Romania</option>
+                      <option value="Russia">Russia</option>
+                      <option value="Saudi Arabia">Saudi Arabia</option>
+                      <option value="Singapore">Singapore</option>
+                      <option value="Slovakia">Slovakia</option>
+                      <option value="South Africa">South Africa</option>
+                      <option value="South Korea">South Korea</option>
+                      <option value="Spain">Spain</option>
+                      <option value="Sweden">Sweden</option>
+                      <option value="Switzerland">Switzerland</option>
+                      <option value="Thailand">Thailand</option>
+                      <option value="Turkey">Turkey</option>
+                      <option value="Ukraine">Ukraine</option>
+                      <option value="United Arab Emirates">United Arab Emirates</option>
+                      <option value="United Kingdom">United Kingdom</option>
+                      <option value="United States">United States</option>
+                      <option value="Venezuela">Venezuela</option>
+                      <option value="Vietnam">Vietnam</option>
+                    </select>
+                    <div class="invalid-feedback">Please Select your Country.</div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="dateOfBirth" class="form-label">Date Of Birth</label>
+                    <input type="date" name="date" class="form-control" th:field="*{birthDate}" id="dateOfBirth" th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
+                    <div class="invalid-feedback">Please enter your date of birth.</div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="favouritePlayer" class="form-label">Favourite Player</label>
+                    <select th:field="*{favouritePlayer}" id="favouritePlayer" class="form-select">
+                      <option value="Erling Haaland" selected>Erling Haaland</option>
+                      <option value="Marco Reus">Marco Reus</option>
+                      <option value="Jude Bellingham">Jude Bellingham</option>
+                      <option value="Mats Hummels">Mats Hummels</option>
+                      <option value="Gregor Kobel">Gregor Kobel</option>
+                      <option value="Julian Brandt">Julian Brandt</option>
+                      <option value="Karim Adeyemi">Karim Adeyemi</option>
+                      <option value="Nico Schlotterbeck">Nico Schlotterbeck</option>
+                      <option value="Emre Can">Emre Can</option>
+                      <option value="Donyell Malen">Donyell Malen</option>
+                      <option value="Niklas Süle">Niklas Süle</option>
+                      <option value="Jamie Bynoe-Gittens">Jamie Bynoe-Gittens</option>
+                      <option value="Marcel Sabitzer">Marcel Sabitzer</option>
+                      <option value="Serhou Guirassy">Serhou Guirassy</option>
+                      <option value="Robert Lewandowski">Robert Lewandowski</option>
+                      <option value="Pierre-Emerick Aubameyang">Pierre-Emerick Aubameyang</option>
+                      <option value="Jadon Sancho">Jadon Sancho</option>
+                      <option value="Shinji Kagawa">Shinji Kagawa</option>
+                      <option value="Henrikh Mkhitaryan">Henrikh Mkhitaryan</option>
+                      <option value="Ilkay Gündogan">Ilkay Gündogan</option>
+                      <option value="Nuri Şahin">Nuri Şahin</option>
+                      <option value="Mario Götze">Mario Götze</option>
+                      <option value="Łukasz Piszczek">Łukasz Piszczek</option>
+                      <option value="Roman Weidenfeller">Roman Weidenfeller</option>
+                      <option value="Ousmane Dembélé">Ousmane Dembélé</option>
+                      <option value="Christian Pulisic">Christian Pulisic</option>
+                      <option value="Axel Witsel">Axel Witsel</option>
+                      <option value="Raphaël Guerreiro">Raphaël Guerreiro</option>
+                      <option value="Jan Koller">Jan Koller</option>
+                      <option value="Stéphane Chapuisat">Stéphane Chapuisat</option>
+                      <option value="Matthias Sammer">Matthias Sammer</option>
+                      <option value="Jürgen Kohler">Jürgen Kohler</option>
+                    </select>
+                    <div class="invalid-feedback">Please Select your favourite player.</div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="form-check">
+                      <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
+                      <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
+                      <div class="invalid-feedback">You must agree before submitting.</div>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <button class="btn btn-primary w-100" type="submit">Join BVB Family</button>
+                  </div>
+
+                  <div class="col-12">
+                    <p class="small mb-0">Already have an account? <a href="login">Log in</a></p>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+
+            <div class="credits">
+              Designed by <a href="">Mahamudur Rahaman</a>
+            </div>
+
           </div>
         </div>
+      </div>
 
-        <button class="btn btn-primary w-100" type="submit">Create Account</button>
+    </section>
 
-        <div class="login-link">
-          Already have an account? <a href="login">Log in</a>
-        </div>
-      </form>
-    </div>
   </div>
+</main>
 
-  <div class="credits">
-    Designed by <a href="#">Mahamudur Rahaman</a>
-  </div>
-</div>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-<!-- Bootstrap JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<!-- Vendor JS Files -->
+<script src="/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/vendor/chart.js/chart.umd.js"></script>
+<script src="/vendor/echarts/echarts.min.js"></script>
+<script src="/vendor/quill/quill.js"></script>
+<script src="/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="/vendor/tinymce/tinymce.min.js"></script>
+<script src="/vendor/php-email-form/validate.js"></script>
 
-<script>
-  // Form validation
-  (function() {
-    'use strict';
-    var forms = document.querySelectorAll('.needs-validation');
-    Array.prototype.slice.call(forms).forEach(function(form) {
-      form.addEventListener('submit', function(event) {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
+<!-- Template Main JS File -->
+<script src="/js/main.js"></script>
 
-    // Set max date for date inputs to today
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('supporterSince').setAttribute('max', today);
-    document.getElementById('dateOfBirth').setAttribute('max', today);
-  })();
-</script>
 </body>
+
 </html>
