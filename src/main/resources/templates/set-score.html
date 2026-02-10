@@ -4,30 +4,17 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
     <title>Match Result - Borussia Dortmund</title>
-    <meta content="Enter match results for Borussia Dortmund" name="description">
-    <meta content="Borussia Dortmund, BVB, match result" name="keywords">
 
-    <!-- Favicons -->
     <link href="/img/realIcon2.png" rel="icon">
-    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Template Main CSS File -->
-    <link href="/css/style.css" rel="stylesheet">
-
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #FDE100 0%, #000000 100%);
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
         }
 
         .main {
@@ -35,93 +22,43 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            padding: 2rem 0;
+            width: 100%;
+            padding: 1rem;
         }
 
         .result-card {
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            padding: 3rem;
-            max-width: 500px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            border-top: 4px solid #FDE100;
+            padding: 2.5rem;
+            max-width: 450px;
             width: 100%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         .card-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .card-header h1 {
             color: #000;
-            font-weight: 700;
-            font-size: 1.75rem;
+            font-weight: bold;
+            font-size: 1.5rem;
             margin-bottom: 0.5rem;
-        }
-
-        .card-header p {
-            color: #666;
-            font-size: 0.95rem;
-        }
-
-        .form-label {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .form-control {
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: #FDE100;
-            box-shadow: 0 0 0 0.2rem rgba(253, 225, 0, 0.25);
-        }
-
-        .score-group {
-            margin-bottom: 1.5rem;
         }
 
         .btn-primary {
             background: #FDE100;
             border: none;
             color: #000;
-            font-weight: 600;
-            padding: 0.875rem;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
+            font-weight: bold;
             margin-top: 1rem;
         }
 
         .btn-primary:hover {
-            background: #000;
-            color: #FDE100;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .invalid-feedback {
-            font-size: 0.875rem;
-        }
-
-        .bvb-badge {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1rem;
-            background: #FDE100;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: #000;
+            background: #e6ca00;
         }
     </style>
 </head>
@@ -132,7 +69,6 @@
     <div class="container">
         <div class="result-card">
             <div class="card-header">
-                <div class="bvb-badge">BVB</div>
                 <h1>Enter Match Result</h1>
                 <p>Record the final score for this match</p>
             </div>
@@ -140,34 +76,26 @@
             <form class="needs-validation" method="post" th:action="@{save-results}" th:object="${dto}" novalidate>
                 <input type="hidden" name="id" th:value="${match.id}" />
 
-                <div class="score-group">
-                    <label for="ourScore" class="form-label">
-                        <i class="bi bi-trophy-fill me-2" style="color: #FDE100;"></i>Borussia Dortmund Goals
-                    </label>
+                <div class="mb-3">
+                    <label for="ourScore" class="form-label">Borussia Dortmund Goals</label>
                     <input type="number" min="0" max="20" class="form-control" th:field="*{ourScore}" id="ourScore" placeholder="0" required>
                     <div class="invalid-feedback">Please enter the number of goals scored by BVB</div>
                 </div>
 
-                <div class="score-group">
-                    <label for="theirScore" class="form-label">
-                        <i class="bi bi-shield-fill me-2" style="color: #666;"></i>Opponent Goals
-                    </label>
+                <div class="mb-3">
+                    <label for="theirScore" class="form-label">Opponent Goals</label>
                     <input type="number" min="0" max="20" class="form-control" th:field="*{theirScore}" id="theirScore" placeholder="0" required>
                     <div class="invalid-feedback">Please enter the number of goals scored by the opponent</div>
                 </div>
 
-                <button class="btn btn-primary w-100" type="submit">
-                    <i class="bi bi-check-circle me-2"></i>Submit Result
-                </button>
+                <button class="btn btn-primary w-100" type="submit">Submit Result</button>
             </form>
         </div>
     </div>
 </main>
 
-<!-- Vendor JS Files -->
 <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- Form Validation -->
 <script>
     (function() {
         'use strict';
