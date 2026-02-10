@@ -11,19 +11,20 @@
     <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+        html, body {
+            height: 100%;
             margin: 0;
         }
 
         .main {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            width: 100%;
-            padding: 1rem;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
         }
 
         .result-card {
@@ -66,31 +67,27 @@
 <body>
 
 <main id="main" class="main">
-    <div class="container">
-        <div class="result-card">
-            <div class="card-header">
-                <h1>Enter Match Result</h1>
-                <p>Record the final score for this match</p>
+    <div class="result-card">
+        <div class="card-header">
+            <h1>Enter Match Result</h1>
+            <p>Record the final score for this match</p>
+        </div>
+
+        <form class="needs-validation" method="post" th:action="@{save-results}" th:object="${dto}" novalidate>
+            <input type="hidden" name="id" th:value="${match.id}" />
+
+            <div class="mb-3">
+                <label for="ourScore" class="form-label">Borussia Dortmund Goals</label>
+                <input type="number" class="form-control" th:field="*{ourScore}" id="ourScore" required>
             </div>
 
-            <form class="needs-validation" method="post" th:action="@{save-results}" th:object="${dto}" novalidate>
-                <input type="hidden" name="id" th:value="${match.id}" />
+            <div class="mb-3">
+                <label for="theirScore" class="form-label">Opponent Goals</label>
+                <input type="number" class="form-control" th:field="*{theirScore}" id="theirScore" required>
+            </div>
 
-                <div class="mb-3">
-                    <label for="ourScore" class="form-label">Borussia Dortmund Goals</label>
-                    <input type="number" min="0" max="20" class="form-control" th:field="*{ourScore}" id="ourScore" placeholder="0" required>
-                    <div class="invalid-feedback">Please enter the number of goals scored by BVB</div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="theirScore" class="form-label">Opponent Goals</label>
-                    <input type="number" min="0" max="20" class="form-control" th:field="*{theirScore}" id="theirScore" placeholder="0" required>
-                    <div class="invalid-feedback">Please enter the number of goals scored by the opponent</div>
-                </div>
-
-                <button class="btn btn-primary w-100" type="submit">Submit Result</button>
-            </form>
-        </div>
+            <button class="btn btn-primary w-100" type="submit">Submit Result</button>
+        </form>
     </div>
 </main>
 
