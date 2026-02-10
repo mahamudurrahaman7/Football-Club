@@ -4,683 +4,193 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
     <title>BVB - Upcoming Matches</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
 
-    <!-- Favicons -->
     <link href="/img/realIcon2.png" rel="icon">
-    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="/css/style.css" rel="stylesheet">
 
     <style>
-        :root {
-            --bvb-yellow: #FDE100;
-            --bvb-black: #000000;
-            --bvb-dark-gray: #1a1a1a;
-            --bvb-light-gray: #2d2d2d;
-            --sidebar-width: 280px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
-            background-attachment: fixed;
-            font-family: 'Roboto', sans-serif;
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background:
-                    linear-gradient(45deg, transparent 48%, var(--bvb-yellow) 49%, var(--bvb-yellow) 51%, transparent 52%),
-                    linear-gradient(-45deg, transparent 48%, var(--bvb-yellow) 49%, var(--bvb-yellow) 51%, transparent 52%);
-            background-size: 100px 100px;
-            opacity: 0.02;
-            pointer-events: none;
-            z-index: 0;
+            background-color: #000;
+            color: #fff;
         }
 
         .sidebar {
             height: 100vh;
-            width: var(--sidebar-width);
+            width: 250px;
             position: fixed;
-            top: 0;
-            left: 0;
-            background: linear-gradient(180deg, var(--bvb-black) 0%, var(--bvb-dark-gray) 100%);
-            padding-top: 30px;
-            font-family: 'Rajdhani', sans-serif;
-            z-index: 1000;
-            box-shadow: 5px 0 30px rgba(253, 225, 0, 0.15);
-            border-right: 3px solid var(--bvb-yellow);
-        }
-
-        .sidebar-logo {
-            text-align: center;
+            background-color: #111;
             padding: 20px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--bvb-yellow);
         }
 
-        .sidebar-logo h2 {
-            color: var(--bvb-yellow);
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            margin: 0;
-            text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(253, 225, 0, 0.5);
+        .sidebar h2 {
+            color: #FDE100;
+            text-align: center;
         }
 
-        .sidebar-logo p {
-            color: #ffffff;
-            font-size: 12px;
-            margin-top: 5px;
-            letter-spacing: 3px;
-            opacity: 0.8;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .sidebar ul li {
-            margin: 8px 15px;
-            position: relative;
-        }
-
-        .sidebar ul li a {
-            display: flex;
-            align-items: center;
-            padding: 16px 20px;
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 10px;
             text-decoration: none;
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .sidebar ul li a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            background: var(--bvb-yellow);
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
-        }
-
-        .sidebar ul li a:hover {
-            background: var(--bvb-light-gray);
-            color: var(--bvb-yellow);
-            transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(253, 225, 0, 0.2);
-        }
-
-        .sidebar ul li a:hover::before {
-            transform: scaleY(1);
-        }
-
-        .sidebar ul li a i {
-            margin-right: 12px;
-            font-size: 20px;
         }
 
         .main-content {
-            margin-left: var(--sidebar-width);
-            padding: 40px;
-            position: relative;
-            z-index: 1;
-            min-height: 100vh;
-        }
-
-        .page-header {
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .page-header h1 {
-            color: var(--bvb-yellow);
-            font-size: 48px;
-            font-weight: 700;
-            font-family: 'Rajdhani', sans-serif;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            text-shadow: 0 0 30px rgba(253, 225, 0, 0.4);
-        }
-
-        .card {
-            background: linear-gradient(135deg, var(--bvb-dark-gray) 0%, var(--bvb-light-gray) 100%);
-            border: 2px solid rgba(253, 225, 0, 0.3);
-            border-radius: 15px;
-            padding: 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
-            overflow: hidden;
-            position: relative;
-            margin-bottom: 30px;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--bvb-yellow) 0%, #fff44f 50%, var(--bvb-yellow) 100%);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(253, 225, 0, 0.3);
-            border-color: var(--bvb-yellow);
-        }
-
-        .card-body {
+            margin-left: 250px;
             padding: 30px;
         }
 
-        .card-title {
-            color: var(--bvb-yellow);
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 25px;
-            font-family: 'Rajdhani', sans-serif;
+        h1, h3, h5 {
+            color: #FDE100;
         }
 
-        .form-label {
-            color: #ffffff;
-            font-weight: 500;
-            margin-bottom: 8px;
-            font-size: 14px;
-            letter-spacing: 0.5px;
-        }
-
-        .form-control, .form-select {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(253, 225, 0, 0.3);
-            color: #ffffff;
-            padding: 12px 15px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            font-size: 14px;
-        }
-
-        .form-control:focus, .form-select:focus {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--bvb-yellow);
-            box-shadow: 0 0 15px rgba(253, 225, 0, 0.2);
-            color: #ffffff;
-        }
-
-        .form-select option {
-            background: var(--bvb-dark-gray);
-            color: #ffffff;
+        .card, .match-card, .ticket-section, .ticket-input {
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 20px;
+            margin-bottom: 15px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--bvb-yellow) 0%, #e6ca00 100%);
-            color: var(--bvb-black);
+            background-color: #FDE100;
+            color: #000;
             border: none;
-            padding: 12px 35px;
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(253, 225, 0, 0.3);
-            font-family: 'Rajdhani', sans-serif;
         }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(253, 225, 0, 0.5);
-            background: linear-gradient(135deg, #fff44f 0%, var(--bvb-yellow) 100%);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
-        }
-
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(231, 76, 60, 0.5);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
-        }
-
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(46, 204, 113, 0.5);
-        }
-
-        .ticket-section {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 25px;
-            border-radius: 10px;
-            margin: 25px 0;
-            border: 1px solid rgba(253, 225, 0, 0.2);
-        }
-
-        .ticket-section h3 {
-            color: var(--bvb-yellow);
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            margin-bottom: 20px;
-            font-size: 22px;
-            letter-spacing: 1px;
-        }
-
-        .ticket-input {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(253, 225, 0, 0.15);
-        }
-
-        .ticket-input label {
-            display: block;
-            color: #ffffff;
-            font-weight: 500;
-            margin-bottom: 8px;
-            margin-top: 10px;
-            font-size: 13px;
-        }
-
-        .ticket-input input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(253, 225, 0, 0.3);
-            color: #ffffff;
-            padding: 10px 12px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .ticket-input input:focus {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--bvb-yellow);
-            box-shadow: 0 0 10px rgba(253, 225, 0, 0.2);
-        }
-
-        .ticket-input hr {
-            border-color: rgba(253, 225, 0, 0.2);
-            margin-top: 15px;
-        }
-
-        button[type="button"] {
-            background: rgba(253, 225, 0, 0.2);
-            color: var(--bvb-yellow);
-            border: 2px solid var(--bvb-yellow);
-            padding: 10px 25px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-        }
-
-        button[type="button"]:hover {
-            background: var(--bvb-yellow);
-            color: var(--bvb-black);
-        }
-
-        .match-card {
-            background: linear-gradient(135deg, var(--bvb-dark-gray) 0%, var(--bvb-light-gray) 100%);
-            border: 2px solid rgba(253, 225, 0, 0.4);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .match-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--bvb-yellow) 0%, #fff44f 50%, var(--bvb-yellow) 100%);
-        }
-
-        .match-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(253, 225, 0, 0.3);
-            border-color: var(--bvb-yellow);
-        }
-
-        .match-link {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .match-card h3 {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--bvb-yellow);
-            margin-bottom: 12px;
-            font-family: 'Rajdhani', sans-serif;
-            letter-spacing: 1px;
-        }
-
-        .match-card h4 {
-            font-size: 20px;
-            color: #ffffff;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .match-card h5 {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 400;
-        }
-
-        .button-container {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        @media (max-width: 992px) {
-            .sidebar {
-                width: 0;
-                overflow: hidden;
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .page-header h1 {
-                font-size: 32px;
-            }
-
-            .match-card h3 {
-                font-size: 24px;
-            }
+        .form-label{
+            color: #dddddd;
         }
     </style>
 </head>
 
 <body>
 
-<main id="main" class="main">
-    <div class="sidebar">
-        <div class="sidebar-logo">
-            <h2>BVB 09</h2>
-            <p>DASHBOARD</p>
-        </div>
-        <ul>
-            <li><a href="dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
-            <li><a href="player-list"><i class="bi bi-people-fill"></i> Player List</a></li>
-            <li><a href="result-list"><i class="bi bi-trophy-fill"></i> Result List</a></li>
-            <li><a href="highlights"><i class="bi bi-play-circle-fill"></i> Highlights</a></li>
-        </ul>
-    </div>
+<div class="sidebar">
+    <h2>BVB 09</h2>
+    <a href="dashboard">Dashboard</a>
+    <a href="player-list">Player List</a>
+    <a href="result-list">Result List</a>
+    <a href="highlights">Highlights</a>
+</div>
 
-    <div class="main-content">
-        <section class="section">
-            <div class="row" th:if="${isAdmin}">
-                <div class="col-lg-10">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Create New Match</h5>
+<div class="main-content">
+    <div th:if="${isAdmin}">
+        <div class="card">
+            <h5>Create New Match</h5>
 
-                            <form method="post" th:action="@{upcoming-matches}" th:object="${matches}">
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="type" class="form-label">Match Type</label>
-                                        <select th:field="*{type}" id="type" class="form-select">
-                                            <option value="Home" selected>Home</option>
-                                            <option value="Away">Away</option>
-                                        </select>
-                                    </div>
+            <form method="post" th:action="@{upcoming-matches}" th:object="${matches}">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Match Type</label>
+                        <select th:field="*{type}" class="form-select">
+                            <option value="Home">Home</option>
+                            <option value="Away">Away</option>
+                        </select>
+                    </div>
 
-                                    <div class="col-md-6">
-                                        <label for="opponent" class="form-label">Opponent</label>
-                                        <select th:field="*{opponentName}" id="opponent" class="form-select">
-                                            <!-- Bundesliga Teams -->
-                                            <option value="Bayern Munich">Bayern Munich</option>
-                                            <option value="RB Leipzig">RB Leipzig</option>
-                                            <option value="Bayer Leverkusen">Bayer Leverkusen</option>
-                                            <option value="Borussia Mönchengladbach">Borussia Mönchengladbach</option>
-                                            <option value="Eintracht Frankfurt">Eintracht Frankfurt</option>
-                                            <option value="VfB Stuttgart">VfB Stuttgart</option>
-                                            <option value="TSG Hoffenheim">TSG Hoffenheim</option>
-                                            <option value="SC Freiburg">SC Freiburg</option>
-                                            <option value="VfL Wolfsburg">VfL Wolfsburg</option>
-                                            <option value="Werder Bremen">Werder Bremen</option>
-                                            <option value="FC Augsburg">FC Augsburg</option>
-                                            <option value="Mainz 05">Mainz 05</option>
-                                            <option value="Union Berlin">Union Berlin</option>
-                                            <option value="FC Köln">FC Köln</option>
-                                            <option value="Bochum">Bochum</option>
-                                            <option value="Heidenheim">Heidenheim</option>
-                                            <option value="St Pauli">St Pauli</option>
-
-                                            <!-- Champions League Teams -->
-                                            <option value="Real Madrid">Real Madrid</option>
-                                            <option value="Barcelona">Barcelona</option>
-                                            <option value="Atletico Madrid">Atletico Madrid</option>
-                                            <option value="Manchester City">Manchester City</option>
-                                            <option value="Arsenal">Arsenal</option>
-                                            <option value="Liverpool">Liverpool</option>
-                                            <option value="Manchester United">Manchester United</option>
-                                            <option value="Chelsea">Chelsea</option>
-                                            <option value="Inter Milan">Inter Milan</option>
-                                            <option value="AC Milan">AC Milan</option>
-                                            <option value="Juventus">Juventus</option>
-                                            <option value="Napoli">Napoli</option>
-                                            <option value="Paris Saint Germain">Paris Saint Germain</option>
-                                            <option value="Benfica">Benfica</option>
-                                            <option value="Porto">Porto</option>
-                                            <option value="Ajax">Ajax</option>
-                                            <option value="PSV Eindhoven">PSV Eindhoven</option>
-                                            <option value="Sporting CP">Sporting CP</option>
-                                            <option value="Galatasaray">Galatasaray</option>
-                                            <option value="RB Salzburg">RB Salzburg</option>
-                                            <option value="Shakhtar Donetsk">Shakhtar Donetsk</option>
-                                            <option value="Celtic">Celtic</option>
-
-                                            <!-- Lower League Teams -->
-                                            <option value="Arminia Bielefeld">Arminia Bielefeld</option>
-                                            <option value="SV Darmstadt 98">SV Darmstadt 98</option>
-                                            <option value="Holstein Kiel">Holstein Kiel</option>
-                                            <option value="Karlsruher SC">Karlsruher SC</option>
-                                            <option value="SV Sandhausen">SV Sandhausen</option>
-                                            <option value="Jahn Regensburg">Jahn Regensburg</option>
-                                            <option value="Greuther Fürth">Greuther Fürth</option>
-                                            <option value="Hansa Rostock">Hansa Rostock</option>
-                                            <option value="Erzgebirge Aue">Erzgebirge Aue</option>
-                                            <option value="SV Wehen Wiesbaden">SV Wehen Wiesbaden</option>
-                                            <option value="Waldhof Mannheim">Waldhof Mannheim</option>
-                                            <option value="MSV Duisburg">MSV Duisburg</option>
-                                            <option value="VfB Lübeck">VfB Lübeck</option>
-                                            <option value="FC Energie Cottbus">FC Energie Cottbus</option>
-                                            <option value="SSV Ulm 1846">SSV Ulm 1846</option>
-                                            <option value="SV Elversberg">SV Elversberg</option>
-                                            <option value="TSV Havelse">TSV Havelse</option>
-                                            <option value="Chemnitzer FC">Chemnitzer FC</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="tournament" class="form-label">Tournament</label>
-                                        <select th:field="*{tournamentName}" id="tournament" class="form-select">
-                                            <option value="Bundesliga">Bundesliga</option>
-                                            <option value="DFB Pokal">DFB Pokal</option>
-                                            <option value="DFL Supercup">DFL Supercup</option>
-                                            <option value="UEFA Champions League">UEFA Champions League</option>
-                                            <option value="UEFA Europa League">UEFA Europa League</option>
-                                            <option value="UEFA Europa Conference League">UEFA Europa Conference League</option>
-                                            <option value="FIFA Club World Cup">FIFA Club World Cup</option>
-                                            <option value="Intercontinental Cup">Intercontinental Cup</option>
-                                            <option value="Relegation Playoff">Relegation Playoff</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label for="date" class="form-label">Match Date</label>
-                                        <input type="date" class="form-control" th:field="*{date}" id="date">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="time" class="form-label">Match Time</label>
-                                        <input type="time" class="form-control" th:field="*{time}" id="time">
-                                    </div>
-                                </div>
-
-                                <div class="ticket-section">
-                                    <h3><i class="bi bi-ticket-perforated"></i> Ticket Information</h3>
-                                    <div id="ticket-container">
-                                        <div th:each="ticket, i : *{tickets}" class="ticket-input">
-                                            <label th:for="'ticketType' + ${i.index}">Ticket Type:</label>
-                                            <input type="text" th:id="'ticketType' + ${i.index}" th:name="'tickets[' + ${i.index} + '].ticketType'" required />
-
-                                            <label th:for="'price' + ${i.index}">Ticket Price (USD):</label>
-                                            <input type="number" th:id="'price' + ${i.index}" th:name="'tickets[' + ${i.index} + '].price'" min="600" max="3000" required />
-
-                                            <label th:for="'availableQuantity' + ${i.index}">Available Quantity:</label>
-                                            <input type="number" th:id="'availableQuantity' + ${i.index}" th:name="'tickets[' + ${i.index} + '].availableQuantity'" min="1000" max="45000" required />
-                                            <hr/>
-                                        </div>
-                                    </div>
-                                    <button type="button" onclick="addTicket()"><i class="bi bi-plus-circle"></i> Add Ticket Type</button>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-12">
-                                        <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Match</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Opponent</label>
+                        <select th:field="*{opponentName}" class="form-select">
+                            <option value="Bayern Munich">Bayern Munich</option>
+                            <option value="RB Leipzig">RB Leipzig</option>
+                            <option value="Bayer Leverkusen">Bayer Leverkusen</option>
+                            <option value="Borussia Mönchengladbach">Borussia Mönchengladbach</option>
+                            <option value="Eintracht Frankfurt">Eintracht Frankfurt</option>
+                            <option value="VfB Stuttgart">VfB Stuttgart</option>
+                            <option value="TSG Hoffenheim">TSG Hoffenheim</option>
+                            <option value="SC Freiburg">SC Freiburg</option>
+                            <option value="VfL Wolfsburg">VfL Wolfsburg</option>
+                            <option value="Werder Bremen">Werder Bremen</option>
+                            <option value="FC Augsburg">FC Augsburg</option>
+                            <option value="Mainz 05">Mainz 05</option>
+                            <option value="Union Berlin">Union Berlin</option>
+                            <option value="FC Köln">FC Köln</option>
+                            <option value="Bochum">Bochum</option>
+                            <option value="Real Madrid">Real Madrid</option>
+                            <option value="Barcelona">Barcelona</option>
+                            <option value="Manchester City">Manchester City</option>
+                            <option value="Arsenal">Arsenal</option>
+                            <option value="Liverpool">Liverpool</option>
+                            <option value="Chelsea">Chelsea</option>
+                            <option value="Inter Milan">Inter Milan</option>
+                            <option value="AC Milan">AC Milan</option>
+                            <option value="Juventus">Juventus</option>
+                            <option value="Paris Saint Germain">Paris Saint Germain</option>
+                        </select>
                     </div>
                 </div>
-            </div>
 
-            <div class="page-header">
-                <h1><i class="bi bi-calendar-event"></i> Upcoming Matches</h1>
-            </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Tournament</label>
+                        <select th:field="*{tournamentName}" class="form-select">
+                            <option value="Bundesliga">Bundesliga</option>
+                            <option value="DFB Pokal">DFB Pokal</option>
+                            <option value="UEFA Champions League">UEFA Champions League</option>
+                            <option value="UEFA Europa League">UEFA Europa League</option>
+                        </select>
+                    </div>
 
-            <div th:each="match : ${upcomingMatchesList}" class="match-card">
-                <a th:href="@{/match/{id}(id=${match.id})}" class="match-link">
-                    <h3>VS <span th:text="${match.opponentName}"></span></h3>
-                    <h4><i class="bi bi-trophy"></i> Tournament: <span th:text="${match.tournamentName}"></span></h4>
-                    <h5><i class="bi bi-geo-alt"></i> <span th:text="${match.type}"></span> Match</h5>
-                </a>
-
-                <div class="button-container" th:if="${isAdmin}">
-                    <form method="post" th:action="@{/delete-upcoming-match}" style="display: inline-block;">
-                        <input type="hidden" name="id" th:value="${match.id}" />
-                        <button type="submit" class="btn btn-danger">
-                            <i class="bi bi-trash"></i> Delete
-                        </button>
-                    </form>
-
-                    <form method="post" th:action="@{/update-upcoming-match}" style="display: inline-block;">
-                        <input type="hidden" name="id" th:value="${match.id}" />
-                        <button type="submit" class="btn btn-success">
-                            <i class="bi bi-pencil-square"></i> Update Result
-                        </button>
-                    </form>
+                    <div class="col-md-6">
+                        <label class="form-label">Match Date</label>
+                        <input type="date" class="form-control" th:field="*{date}">
+                    </div>
                 </div>
-            </div>
-        </section>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Match Time</label>
+                        <input type="time" class="form-control" th:field="*{time}">
+                    </div>
+                </div>
+
+                <div class="ticket-section">
+                    <h3>Ticket Information</h3>
+                    <div id="ticket-container">
+                        <div th:each="ticket, i : *{tickets}" class="ticket-input">
+                            <label>Ticket Type:</label>
+                            <input type="text" class="form-control" th:name="'tickets[' + ${i.index} + '].ticketType'" required />
+
+                            <label>Ticket Price (USD):</label>
+                            <input type="number" class="form-control" th:name="'tickets[' + ${i.index} + '].price'" min="600" max="3000" required />
+
+                            <label>Available Quantity:</label>
+                            <input type="number" class="form-control" th:name="'tickets[' + ${i.index} + '].availableQuantity'" min="1000" max="45000" required />
+                            <hr/>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="addTicket()">Add Ticket Type</button>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save Match</button>
+            </form>
+        </div>
     </div>
-</main>
 
-<footer id="footer" class="footer"></footer>
+    <h1 class="text-center my-4">Upcoming Matches</h1>
 
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
-    <i class="bi bi-arrow-up-short"></i>
-</a>
+    <div th:each="match : ${upcomingMatchesList}" class="match-card">
+        <a th:href="@{/match/{id}(id=${match.id})}" style="text-decoration: none; color: inherit;">
+            <h3>VS <span th:text="${match.opponentName}"></span></h3>
+            <h4 style="color: #fff;">Tournament: <span th:text="${match.tournamentName}"></span></h4>
+            <h5 style="color: #999;"><span th:text="${match.type}"></span> Match</h5>
+        </a>
 
-<!-- Vendor JS Files -->
-<script src="/vendor/apexcharts/apexcharts.min.js"></script>
+        <div th:if="${isAdmin}" class="mt-3">
+            <form method="post" th:action="@{/delete-upcoming-match}" style="display: inline-block;">
+                <input type="hidden" name="id" th:value="${match.id}" />
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+
+            <form method="post" th:action="@{/update-upcoming-match}" style="display: inline-block;">
+                <input type="hidden" name="id" th:value="${match.id}" />
+                <button type="submit" class="btn btn-success">Update Result</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/vendor/chart.js/chart.umd.js"></script>
-<script src="/vendor/echarts/echarts.min.js"></script>
-<script src="/vendor/quill/quill.js"></script>
-<script src="/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="/vendor/tinymce/tinymce.min.js"></script>
-<script src="/vendor/php-email-form/validate.js"></script>
-<script src="/js/main.js"></script>
 
 <script>
     function addTicket() {
@@ -691,14 +201,14 @@
         newTicketDiv.className = 'ticket-input';
 
         newTicketDiv.innerHTML = `
-            <label for="ticketType${newIndex}">Ticket Type:</label>
-            <input type="text" id="ticketType${newIndex}" name="tickets[${newIndex}].ticketType" required />
+            <label>Ticket Type:</label>
+            <input type="text" class="form-control" name="tickets[${newIndex}].ticketType" required />
 
-            <label for="price${newIndex}">Ticket Price (USD):</label>
-            <input type="number" id="price${newIndex}" name="tickets[${newIndex}].price" min="600" max="3000" required />
+            <label>Ticket Price (USD):</label>
+            <input type="number" class="form-control" name="tickets[${newIndex}].price" min="600" max="3000" required />
 
-            <label for="availableQuantity${newIndex}">Available Quantity:</label>
-            <input type="number" id="availableQuantity${newIndex}" name="tickets[${newIndex}].availableQuantity" min="1000" max="45000" required />
+            <label>Available Quantity:</label>
+            <input type="number" class="form-control" name="tickets[${newIndex}].availableQuantity" min="1000" max="45000" required />
             <hr/>
         `;
 
@@ -707,5 +217,4 @@
 </script>
 
 </body>
-
 </html>
